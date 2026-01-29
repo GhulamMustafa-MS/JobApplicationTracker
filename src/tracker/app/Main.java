@@ -1,5 +1,6 @@
 package tracker.app;
 
+import tracker.dao.InterviewDao;
 import tracker.dao.EmployerDao;
 import tracker.dao.CvVersionDao;
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ public class Main {
         CvVersionDao cvDao = new CvVersionDao();
         EmployerDao empDao = new EmployerDao();
         JobApplicationDao JobDao = new JobApplicationDao();
+        InterviewDao InterviewDao = new InterviewDao();
+
 
         while (true) {
             System.out.println("\n--- Job Tracker ---");
@@ -28,6 +31,10 @@ public class Main {
             System.out.println("7) List Job Applications");
             System.out.println("8) Add Job Application");
             System.out.println("9) Update Job Status");
+            System.out.println("10) List Interviews");
+            System.out.println("11) Add Interview");
+            System.out.println("12) List Interview by Job ID");
+            System.out.println("13) Update Interview Status");
             System.out.println("0) Exit");
             System.out.print("Choose: ");
 
@@ -132,7 +139,58 @@ public class Main {
 
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter correct values.");
-            }    
+            }
+            }
+            else if (choice.equals("10")) {
+                InterviewDao.listInterviews();
+            }
+            else if(choice.equals("11")) {
+                try {
+                    System.out.print("Enter Job ID for this interview: ");
+                    int jobId = Integer.parseInt(sc.nextLine().trim());
+
+                    System.out.print("Enter Interview Date (YYYY-MM-DD): ");
+                    LocalDate dateSet = LocalDate.parse(sc.nextLine().trim());
+
+                    System.out.print("Enter Outcome (press Enter for Pending): ");
+                    String outcome = sc.nextLine().trim();
+
+                    InterviewDao.addInterview(jobId, dateSet, outcome);
+
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please try again.");
+                }
+            }
+            else if(choice.equals("12")) {
+                try {
+                System.out.print("Enter Job ID: ");
+                int jobId = Integer.parseInt(sc.nextLine().trim());
+
+                InterviewDao.listInterviewsByJob(jobId);
+
+            } catch (Exception e) {
+                System.out.println("Invalid Job ID.");
+            }
+            }
+            else if(choice.equals("13")){
+                try {
+                    System.out.print("Enter Interview ID: ");
+                    int interviewId = Integer.parseInt(sc.nextLine().trim());
+
+                    System.out.print("Enter New Outcome: ");
+                    String outcome = sc.nextLine().trim();
+
+                    boolean updated = InterviewDao.updateInterviewOutcome(interviewId, outcome);
+
+                    if (updated) {
+                        System.out.println("Interview outcome updated.");
+                    } else {
+                        System.out.println("Interview not found.");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please try again.");
+                }
             }
             else {
                 System.out.println("Invalid option.");
