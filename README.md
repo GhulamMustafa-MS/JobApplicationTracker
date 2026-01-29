@@ -60,13 +60,9 @@ Conversion rate from applications to interviews per CV version
 Technology Stack
 
 Java (CLI application)
-
 JDBC for database connectivity
-
 MySQL 8 relational database
-
 NetBeans with Ant build system
-
 Scanner class for command-line input
 
 Database Design
@@ -138,13 +134,9 @@ Handles user input, menu navigation, and output display.
 
 DAO Layer
 Each DAO (Data Access Object) is responsible for interacting with one database table or domain.
-
 CvVersionDao
-
 EmployerDao
-
 JobApplicationDao
-
 InterviewsDao
 
 Database Layer
@@ -155,21 +147,13 @@ This separation ensures that user interface logic and database logic remain inde
 Concepts Demonstrated
 
 JDBC workflow (Connection, PreparedStatement, ResultSet)
-
 DAO design pattern
-
 SQL joins and relational queries
-
 Foreign key relationships and constraints
-
 Prepared statements and SQL injection prevention
-
 Converting LocalDate to java.sql.Date
-
 Command-line menu systems
-
 Input validation and error handling
-
 Separation of concerns in application design
 
 How to Run
