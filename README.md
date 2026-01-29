@@ -1,115 +1,189 @@
-This project focuses on backend logic, database design, and clean architecture, without a GUI, making it ideal for demonstrating core Java and SQL skills.
+Java CLI Job Application Tracker
+Overview
+
+This project is a console-based Java application that tracks job applications, CV versions, employers, and interviews using JDBC and MySQL. It is designed as a backend-focused portfolio project to demonstrate database design, clean code structure, and practical Java development without a graphical interface.
+
+The system allows users to record where they have applied, which CV version was used, interview progress, and application outcomes. It also supports analytics to evaluate which CV versions are most effective.
 
 Features
+
 CV Version Management
 
-Add and list different versions of your CV
+Add different versions of a CV
 
-Track when each CV version was created
+Store CV type and creation date
 
-Count total CV versions stored
+List all CV versions
+
+Count total CV versions
 
 Employer Management
 
 Store employer contact information
 
-Includes company name, email, phone, LinkedIn, and website
+Includes company name, email, phone number, LinkedIn, and website
 
-List all saved employers
+View a list of all employers
 
 Job Application Tracking
 
-Record job applications linked to:
+Record job applications linked to a specific employer and CV version
 
-A specific employer
+Store job title, location, date applied, and application status
 
-A specific CV version
+Prevent duplicate applications using a database uniqueness constraint
 
-Track:
+List all job applications with employer and CV details
 
-Job title
+Update the status of an application (Applied, Interview, Rejected, Offer, etc.)
 
-Location
-
-Date applied
-
-Current application status (Applied, Interview, Rejected, Offer, etc.)
-
-View all job applications with employer and CV details
-
-Update the status of any application
-
-Interview Tracking (Planned / In Progress)
+Interview Tracking
 
 Schedule interviews linked to a job application
 
-Record interview outcomes
+Store interview date and outcome
 
-Automatically delete interviews if the related job application is removed
+View all interviews with related job and employer details
 
-Analytics (Planned)
+Update interview outcomes
 
-Applications per CV version
+Interviews are automatically deleted if the related job application is removed (ON DELETE CASCADE)
 
-Interviews per CV version
+Analytics
 
-Conversion rate from application → interview
+Number of applications per CV version
 
-Tech Stack
-Technology	Purpose
-Java	Core application logic (CLI-based)
-JDBC	Database connectivity
-MySQL 8	Relational database
-NetBeans (Ant)	Development environment
-Scanner (CLI)	User input handling
+Number of interviews per CV version
+
+Conversion rate from applications to interviews per CV version
+
+Technology Stack
+
+Java (CLI application)
+
+JDBC for database connectivity
+
+MySQL 8 relational database
+
+NetBeans with Ant build system
+
+Scanner class for command-line input
+
 Database Design
 
-The database enforces proper relational integrity using foreign keys.
+The application uses a relational database with foreign key constraints to maintain data integrity.
 
 Tables:
 
-cv_versions – Stores CV variations
+cv_versions
 
-employer – Stores company contact details
+cv_id (Primary Key)
 
-job_applications – Links CVs and employers to job applications
+cv_type
 
-interviews – Tracks interview stages and outcomes
+date_created
 
-The system only stores metadata, not CV files.
+employer
+
+emp_id (Primary Key)
+
+company
+
+email
+
+phone_no
+
+linkedin
+
+website
+
+job_applications
+
+job_id (Primary Key)
+
+cv_id (Foreign Key → cv_versions)
+
+emp_id (Foreign Key → employer)
+
+title
+
+location
+
+date_applied
+
+application_status
+
+Unique constraint to prevent duplicate applications
+
+interviews
+
+interview_id (Primary Key)
+
+job_id (Foreign Key → job_applications)
+
+date_set
+
+outcome
+
+Linked with ON DELETE CASCADE
+
+The system stores only metadata and tracking information. CV files themselves are not stored.
+
+Architecture
+
+The project follows a simple layered structure:
+
+Main (CLI Layer)
+Handles user input, menu navigation, and output display.
+
+DAO Layer
+Each DAO (Data Access Object) is responsible for interacting with one database table or domain.
+
+CvVersionDao
+
+EmployerDao
+
+JobApplicationDao
+
+InterviewsDao
+
+Database Layer
+Db.java manages the database connection.
+
+This separation ensures that user interface logic and database logic remain independent.
 
 Concepts Demonstrated
 
-This project showcases understanding of:
+JDBC workflow (Connection, PreparedStatement, ResultSet)
 
-JDBC workflow: Connection → PreparedStatement → ResultSet
+DAO design pattern
 
-DAO (Data Access Object) design pattern
+SQL joins and relational queries
 
-SQL JOIN operations
-
-Foreign key relationships
+Foreign key relationships and constraints
 
 Prepared statements and SQL injection prevention
 
-Converting LocalDate ↔ java.sql.Date
+Converting LocalDate to java.sql.Date
 
-CLI menu architecture and input validation
+Command-line menu systems
 
-Separation of concerns (UI vs data layer)
+Input validation and error handling
+
+Separation of concerns in application design
 
 How to Run
 
-Set up a MySQL database named tracker_db
+Install MySQL and create a database named tracker_db
 
-Create the required tables (see schema in project files)
+Create the required tables using the provided schema
 
-Add MySQL Connector/J JAR to the project libraries
+Add the MySQL Connector/J JAR file to the project libraries
 
 Update database credentials in Db.java
 
-Run Main.java
+Run Main.java from your IDE or command line
 
-🎯 Project Purpose
+Project Purpose
 
-This project was built as a portfolio piece to demonstrate practical backend development skills using Java and SQL. It simulates a real-world tracking system while emphasizing clean structure and maintainable code.
+This project was built as a portfolio piece to demonstrate practical backend development skills using Java and SQL. It simulates a real-world tracking system while focusing on clean structure, maintainable code, and solid database interaction practices.
