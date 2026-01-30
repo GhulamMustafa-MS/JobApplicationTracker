@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import tracker.db.Db;
 import java.sql.Connection;
 import java.sql.Date;
+import tracker.dao.AnalyticsDao;
 import tracker.dao.JobApplicationDao;
 
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class Main {
         EmployerDao empDao = new EmployerDao();
         JobApplicationDao JobDao = new JobApplicationDao();
         InterviewDao InterviewDao = new InterviewDao();
+        AnalyticsDao AnalyticsDao = new AnalyticsDao();
 
 
         while (true) {
@@ -35,6 +37,9 @@ public class Main {
             System.out.println("11) Add Interview");
             System.out.println("12) List Interview by Job ID");
             System.out.println("13) Update Interview Status");
+            System.out.println("14) Check Applications per CV");
+            System.out.println("15) Check Interviews per CV");
+            System.out.println("16) ConversionRate per CV");
             System.out.println("0) Exit");
             System.out.print("Choose: ");
 
@@ -191,6 +196,15 @@ public class Main {
                 } catch (Exception e) {
                     System.out.println("Invalid input. Please try again.");
                 }
+            }
+            else if (choice.equals("14")){
+                AnalyticsDao.applicationsPerCv();
+            }
+            else if (choice.equals("15")){
+                AnalyticsDao.interviewsPerCv();
+            }
+            else if (choice.equals("16")){
+                AnalyticsDao.conversionRatePerCv();
             }
             else {
                 System.out.println("Invalid option.");
